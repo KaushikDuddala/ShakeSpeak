@@ -75,7 +75,7 @@ async function getResponse(input, type) {
         typePrompt = "in modern language but slightly better worded";
     }
     else if(type == "shakespearian") {
-        typePrompt = "in shakespearian language using various metaphors and strong word choice in order to make the best prompt";
+        typePrompt = "in shakespearian language";
     }
     else{
         return input;
