@@ -86,7 +86,7 @@ async function getResponse(input, type) {
         "temperature": 0.7,
         "max_tokens": 5
     }`;
-    output.textContent = "Loading..";
+    output.textContent = "Loading...";
 
     const response = await fetch(url, {
         method: 'POST',
