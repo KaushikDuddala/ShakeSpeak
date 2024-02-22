@@ -15,6 +15,13 @@ body {
     top: 25px;
 
 }
+#attributions{
+    font-size: 30px;
+    color: white;
+    position:fixed;
+    top: 160px;
+
+}
 .bar {
     width: 500px;
     height: 40px;

@@ -13,6 +13,14 @@ circle.addEventListener('mousedown', (e) => {
     initialX = e.clientX - circle.getBoundingClientRect().left;
 });
 
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+
 document.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
     e.preventDefault();
@@ -80,13 +88,15 @@ async function getResponse(input, type) {
     else{
         return input;
     }
+    const models = ["gpt-3.5-turbo-16k", "gpt-3.5-turbo-0301", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-16k-0613", "chatgpt"]
     const data = `{
-        "model": "chatgpt",
-        "messages": [{"role": "user", "content": "generate ${input} ${typePrompt} and only say the translation, do not say anything such as sure! or anything showing that you are a bot. it should seem as if you are just a translator"}],
-        "temperature": 0.7,
-        "max_tokens": 5
+        "model": "${models[Math.floor(Math.random()*models.length)]}",
+        "messages": [{"role": "user", "content": "generate ${input} ${typePrompt} and only say the translation"}],
+        "temperature": 1,
+        "max_tokens": 15
     }`;
-    output.textContent = "Loading...";
+    output.textContent = "Loading... (This may take while, consider refreshing or trying again later if it doesn't seem to work)";
+
 
     const response = await fetch(url, {
         method: 'POST',
@@ -97,9 +107,15 @@ async function getResponse(input, type) {
         body: data,
     });
     
+    
     const text = await response.json();
     
-    return text.choices[0].message.content;
+    try{
+        return text.choices[0].message.content;
+    }
+    catch(e){
+        return "Sorry, we hit an error, please try again later or refresh the page. This may happen after over-use of the program in order to prevent overload! Thank you for trying ShakeSpeak. (For information, this doesn't always happen but there's limits on usage and that may have been hit)."
+    }
 }
 
 async function gptTrigger()
@@ -167,6 +183,22 @@ async function dropdownTrigger()
         {
             outputText = "I'm sorry"
             
+        }
+    }
+    else if(selectedOption == "perfect")
+    {
+        if(circle.style.left == "450px")
+        {
+            outputText = "As all the world — why, he's a man of wax."
+        }
+        else if(circle.style.left == "225px"){
+            outputText = "He is so absolutely perfect"
+        }
+        else
+        {
+            outputText = "He's perfect"
+            
+        
         }
     }
     output.textContent = outputText; // Modify the output p tag to the selected option
