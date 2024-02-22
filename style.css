@@ -13,13 +13,14 @@ body {
     color: white;
     position:flex;
     top: 25px;
+    padding-bottom:0px;
 
 }
 #attributions{
     font-size: 30px;
     color: white;
-    position:fixed;
-    top: 160px;
+    position:inline-block;
+    top: 0px;
 
 }
 .bar {
